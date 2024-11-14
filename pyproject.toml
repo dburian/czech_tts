@@ -7,7 +7,17 @@ name = "czech_tts"
 version = "0.0.0"
 authors = [{name = "David Burian", email = "david.burian@me.com"}]
 dependencies = [
+  "torch",
+  "torchaudio",
+  "pandas",
+  "seaborn",
+  "numpy",
+  "matplotlib",
+  "tqdm",
+  "jupytext",
 ]
+
+
 
 [tool.jupytext]
 formats = "ipynb,py:percent"

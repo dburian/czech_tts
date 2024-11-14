@@ -1,5 +1,4 @@
 import os
-import json
 from typing import Iterable, TypedDict
 import pandas as pd
 import numpy as np
@@ -76,79 +75,3 @@ class Loader:
             )
             with open(os.path.join(speaker_root, f"{idx}.txt"), mode="w") as txt_file:
                 print(text, file=txt_file, end="")
-
-
-# class Recording(TypedDict):
-#     id: int
-#     phonemes: list[str]
-#     durations: list[float]
-#     waveform: np.ndarray
-
-
-# class Loader:
-#     def __init__(self, root_path: str, sampling_rate: int = 16000) -> None:
-#         self.root_path = root_path
-#         self._len = None
-#         self.sr = sampling_rate
-
-#     @property
-#     def speech_path(self) -> str:
-#         return os.path.join(self.root_path, "speech_48kHz")
-
-#     @property
-#     def segment_path(self) -> str:
-#         return os.path.join(self.root_path, "segmentation")
-
-#     @property
-#     def duration_path(self) -> str:
-#         return os.path.join(self.root_path, "duration")
-
-#     @property
-#     def pitch_path(self) -> str:
-#         return os.path.join(self.root_path, "pitch")
-
-#     def __len__(self) -> int:
-#         if self._len is None:
-#             self._len = len(os.listdir(self.speech_path))
-
-#         return self._len
-
-#     def __iter__(self) -> Iterable[Recording]:
-#         for i in range(len(self)):
-#             phonemes, durations = self._load_segmentation(i)
-#             yield {
-#                 "id": i,
-#                 "phonemes": phonemes,
-#                 "durations": durations,
-#                 "waveform": self._load_waveform(i),
-#             }
-
-#     def _load_waveform(self, id: int) -> np.ndarray:
-#         wav, sr = load(
-#             os.path.join(self.speech_path, f"cz-ham-{id:0>5}.wav"),
-#             format="wav",
-#             backend="ffmpeg",
-#         )
-
-#         if sr != self.sr:
-#             wav = torchaudio.functional.resample(wav, sr, self.sr)
-
-#         return wav.numpy()[0]
-
-#     def _load_segmentation(self, id: int) -> tuple[list[str], list[float]]:
-#         with open(os.path.join(self.segment_path, f"cz-ham-{id:0>5}.json")) as infile:
-#             segmentation = json.load(infile)
-
-#             phonemes = []
-#             durations = []
-#             for seg in segmentation:
-#                 if seg["type"] != "phone":
-#                     continue
-
-#                 phoneme = seg["text"]
-#                 if phoneme == "#":
-#                     phoneme = "$"
-#                 phonemes.append(phoneme)
-#                 durations.append(float(seg["endTime"]) - float(seg["begTime"]))
-
-#             return phonemes, durations
