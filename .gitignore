@@ -1,0 +1,6 @@
+cv-corpus-19.0-2024-09-13
+
+**/__pycache__
+**/*.ipynb
+**/.ipynb_checkpoints
+**/*.egg-info
