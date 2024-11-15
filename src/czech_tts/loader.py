@@ -63,15 +63,16 @@ class Loader:
             speaker_id = row["client_id"]
             waveform = self.load_waveform(row["path"])
             text = row["sentence"]
+            name, _ = os.path.splitext(row["path"])
 
             speaker_root = os.path.join(mfa_root_path, speaker_id)
             os.makedirs(speaker_root, exist_ok=True)
             torchaudio.save(
-                os.path.join(speaker_root, f"{idx}.wav"),
+                os.path.join(speaker_root, f"{name}.wav"),
                 torch.from_numpy(waveform).unsqueeze(0),
                 self.sr,
                 channels_first=True,
                 format="wav",
             )
-            with open(os.path.join(speaker_root, f"{idx}.txt"), mode="w") as txt_file:
+            with open(os.path.join(speaker_root, f"{name}.txt"), mode="w") as txt_file:
                 print(text, file=txt_file, end="")
