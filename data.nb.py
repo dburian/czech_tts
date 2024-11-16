@@ -56,11 +56,11 @@ data["path"].iloc[2]
 # ## Testing the loader
 
 # %%
-from czech_tts.loader import Loader
+from czech_tts.loader import CommonVoiceLoader
 from tqdm.auto import tqdm
 
 # %%
-loader = Loader("./cv-corpus-19.0-2024-09-13/", "train")
+loader = CommonVoiceLoader("./cv-corpus-19.0-2024-09-13/", "train")
 # %%
 len(loader)
 
